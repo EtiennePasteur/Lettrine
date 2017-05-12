@@ -1,0 +1,2 @@
+# Lettrine
+OpenCV drawing extractor
