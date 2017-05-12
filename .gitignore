@@ -1,32 +1,23 @@
-# Compiled Object files
-*.slo
-*.lo
+#
+# emacs shit
+#
+*~
+.*~
+\#*
+.\#*
+
+#
+# cpp shit
+#
 *.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
 *.out
-*.app
 
-# Clion
+#
+# clion shit
+#
 .idea/
+
+#
+# project shit
+#
+lettrine
