@@ -122,7 +122,7 @@ void bwareaopen(Mat &img, int size) {
     img = newimg;
 }
 
-int main(int argc, char **argv) {
+int mainU(/*int argc, char **argv*/) {
     namedWindow("Lettrine", 1);
     vector<vector<Point>> squares;
 

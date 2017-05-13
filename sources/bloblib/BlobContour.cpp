@@ -192,7 +192,7 @@ const t_PointList& CBlobContour::GetContourPoints()
 	it = m_contour[0].begin();
 	en = m_contour[0].end();
 	Point pt = m_contourPoints[0][m_contourPoints.size()-1];
-	for(it;it!=en;it++){
+	for(;it!=en;it++){
 		pt = chainCode2Point(pt,*it);
 		m_contourPoints[0].push_back(pt);
 	}

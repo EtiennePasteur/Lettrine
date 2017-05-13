@@ -125,7 +125,7 @@ CBlob::~CBlob()
 void CBlob::ClearContours()
 {	
 	t_CBlobContourList::iterator it=m_internalContours.begin(),en=m_internalContours.end();
-	for(it;it!=en;it++){
+	for(;it!=en;it++){
 		delete (*it);
 	}
 	m_internalContours.clear();
@@ -301,7 +301,7 @@ double CBlob::ExternPerimeter( IplImage *maskImage, bool xBorder /* = true */, b
 		list<CBlob *>::iterator it =joinedBlobs.begin(),en = joinedBlobs.end();
 		m_externPerimeter=(*it)->ExternPerimeter(maskImage, xBorder, yBorder);
 		it++;
-		for(it;it!=en;it++){
+		for(;it!=en;it++){
 			m_externPerimeter+=(*it)->ExternPerimeter(maskImage, xBorder, yBorder);
 		}
 		return m_externPerimeter;
@@ -323,7 +323,7 @@ double CBlob::ExternPerimeter( IplImage *maskImage, bool xBorder /* = true */, b
 	previousPoint.x = -1;
 
 	// which contour pixels touch border?
-	for( it;it!=en;it++)
+	for(;it!=en;it++)
 	{
 		actualPoint = *(it);
 		find = false;
@@ -653,7 +653,7 @@ CvRect CBlob::GetBoundingBox()
 
 
 	t_PointList::iterator it=externContour.begin(),en=externContour.end();
-	for( it;it!=en;it++)
+	for(;it!=en;it++)
 	{
 		Point &actualPoint = *it;
 
@@ -867,7 +867,7 @@ void CBlob::FillBlob( Mat image, CvScalar color, int offsetX, int offsetY, bool 
         if(srcImage.data){
           Mat mask(bbox.height,bbox.width,CV_8UC1);
           mask.setTo(0);
-          for(it;it!=en;it++){
+          for(;it!=en;it++){
             drawContours(mask,(*it)->GetContours(),-1,255,CV_FILLED,8,noArray(),2147483647,offset);
           }
           srcImage(bbox).copyTo(temp,mask);
@@ -875,7 +875,7 @@ void CBlob::FillBlob( Mat image, CvScalar color, int offsetX, int offsetY, bool 
           temp.copyTo(image_roi,mask);
         }
         else{
-          for(it;it!=en;it++){
+          for(;it!=en;it++){
             drawContours(image,(*it)->GetContours(),-1,CV_RGB(0,0,0),CV_FILLED,8,noArray(),2147483647,drawOffset);
           }
         }

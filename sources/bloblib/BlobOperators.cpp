@@ -5,7 +5,7 @@ using namespace cv;
   Implementació de les classes per al càlcul de característiques sobre el blob
 
   Implementation of the helper classes to perform operations on blobs
-/**************************************************************************/
+***************************************************************************/
 
 /**
 - FUNCTION: Moment
@@ -100,7 +100,7 @@ double CBlobGetMinXatMinY::operator()(CBlob &blob)
 	externContour = blob.GetExternalContour()->GetContourPoints();
 	if( externContour.size()==0 ) return result;
 	t_PointList::iterator it=externContour.begin(),en=externContour.end();
-	for(it;it!=en;it++)
+	for(;it!=en;it++)
 	{
 		Point &actualPoint = *it;
 
@@ -135,7 +135,7 @@ double CBlobGetMinYatMaxX::operator()(CBlob &blob)
 	if( externContour.size()==0 ) return result;
 	t_PointList::iterator it=externContour.begin(),en=externContour.end();
 
-	for( it;it!=en;it++)
+	for(;it!=en;it++)
 	{
 		Point actualPoint = *it;
 
@@ -170,7 +170,7 @@ double CBlobGetMaxXatMaxY::operator()(CBlob &blob)
 	if( externContour.size()==0 ) return result;
 
 	t_PointList::iterator it=externContour.begin(),en=externContour.end();
-	for( it;it!=en;it++)
+	for(;it!=en;it++)
 	{
 		Point &actualPoint = *it;
 
@@ -206,7 +206,7 @@ double CBlobGetMaxYatMinX::operator()(CBlob &blob)
 
 
 	t_PointList::iterator it=externContour.begin(),en=externContour.end();
-	for( it;it!=en;it++)
+	for(;it!=en;it++)
 	{
 		Point &actualPoint = *it;
 
