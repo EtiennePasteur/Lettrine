@@ -3,12 +3,13 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
+#include "BlobResult.h"
 
 using namespace cv;
 using namespace std;
 
 
-int thresh = 50, N = 1;
+int thresh = 255, N = 11;
 
 // helper function:
 // finds a cosine of angle between vectors
@@ -73,7 +74,7 @@ static void findSquares(const Mat &image, vector<vector<Point> > &squares) {
                 // area may be positive or negative - in accordance with the
                 // contour orientation
                 if (approx.size() == 4 &&
-                    fabs(contourArea(Mat(approx))) > 10000 &&
+                    fabs(contourArea(Mat(approx))) > 2000 &&
                     isContourConvex(Mat(approx))) {
                     double maxCosine = 0;
 
@@ -97,6 +98,8 @@ static void findSquares(const Mat &image, vector<vector<Point> > &squares) {
 
 // the function draws all the squares in the image
 static void drawSquares(Mat &image, const vector<vector<Point> > &squares) {
+    if (squares.size() == 0)
+        std::cout << "No image found" << std::endl;
     for (size_t i = 0; i < squares.size(); i++) {
         std::cout << "Draw square n" << i << std::endl;
         const Point *p = &squares[i][0];
@@ -106,12 +109,39 @@ static void drawSquares(Mat &image, const vector<vector<Point> > &squares) {
     imshow("Lettrine", image);
 }
 
+void bwareaopen(Mat &img, int size) {
+    CBlobResult blobs;
+    blobs = CBlobResult(img, Mat(), 4);
+    blobs.Filter(blobs, B_INCLUDE, CBlobGetLength(), B_GREATER, size);
+
+    Mat newimg(img.size(), img.type());
+    newimg.setTo(0);
+    for (int i = 0; i < blobs.GetNumBlobs(); i++) {
+        blobs.GetBlob(i)->FillBlob(newimg, CV_RGB(255, 255, 255), 0, 0, true);
+    }
+    img = newimg;
+}
 
 int main(int argc, char **argv) {
     namedWindow("Lettrine", 1);
-    vector<vector<Point> > squares;
+    vector<vector<Point>> squares;
 
-    Mat image = imread("3.jpg", 1);
+    Mat image = imread("data/1.jpg", 1);
+    cvtColor(image, image, CV_RGB2GRAY);
+    threshold(image, image, 75.0, 255.0, THRESH_BINARY_INV);
+
+    bwareaopen(image, 800);
+
+    resize(image, image, Size(0, 0), 0.2, 0.2);
+
+    cvtColor(image, image, CV_GRAY2RGB);
+
+    medianBlur(image, image, 1);
+
+
+//    threshold(image, image, 101, 255, CV_THRESH_TOZERO);
+//    threshold(image, image, 150, 255, CV_THRESH_TOZERO_INV);
+
     findSquares(image, squares);
     drawSquares(image, squares);
 
