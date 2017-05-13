@@ -21,8 +21,7 @@ set(SOURCE_FILES
         sources/bloblib/BlobResult.cpp
         sources/bloblib/BlobResult.h
         sources/bloblib/ComponentLabeling.cpp
-        sources/bloblib/ComponentLabeling.h
-        )
+        sources/bloblib/ComponentLabeling.h)
 
 add_executable(Lettrine ${SOURCE_FILES})
 target_link_libraries( Lettrine ${OpenCV_LIBS} boost_system boost_filesystem pthread)
