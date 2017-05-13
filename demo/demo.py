@@ -14,7 +14,6 @@ Usage: %s DIR [PORT]
 
 
 Lettrine demo %s - Open Library Hackathon 2017"""
-# DOM_IMAGE = "<img src=\"%s\" alt=\"Image\" class=\"floated\">"
 DOM_IMAGE = """\
 <a class="thumbnail" href="#thumb">
   <img src="%s"

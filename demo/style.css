@@ -22,7 +22,7 @@ text-decoration: none;
 .thumbnail span img{
 border-width: 0;
 padding: 2px;
-max-width: 400%;
+max-width: 400px;
 }
 
 .thumbnail:hover span{
