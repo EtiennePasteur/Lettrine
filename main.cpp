@@ -12,8 +12,8 @@ namespace fs = boost::filesystem;
 // NBT payload
 #include "nbt.hpp"
 
-static char const *_version = "0.1.0";
-static char const *_usage =
+static char const * const _version = "0.1.0";
+static char const * const _usage =
   R"(Usage: %s SOURCE
 
 	SOURCE		url or directory
@@ -21,7 +21,7 @@ static char const *_usage =
 
 Lettrine %s - Open Library Hackathon 2017)";
 
-static inline int usage(char const *name)
+static inline int usage(char const * const name)
 {
   std::cout << fmt(_usage) % name % _version << std::endl;
   return (1);
@@ -32,7 +32,7 @@ int main(int ac, char **av)
   if (ac != 2)
     return (usage(av[0]));
 
-  fs::path p(av[1]);
+  fs::path const p(av[1]);
   if (fs::is_directory(p))
     {
       Socc s("4242");

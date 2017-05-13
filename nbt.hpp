@@ -19,28 +19,25 @@ class Socc
   io::ip::tcp::socket s;
   io::ip::tcp::resolver resolver;
 
-  void dropdapayload(short val)
+  inline void _dropdatag(TAG const tag)
   {
-    uint16_t net = htons(val);
-    io::write(s, io::buffer((char const *)&net, sizeof(uint16_t)));
-  }
-
-  void dropdapayload(char const *val)
-  {
-    io::write(s, io::buffer(val, std::strlen(val)));
+    io::write(s, io::buffer((char const *)&tag, sizeof(tag)));
   }
 
 public:
-  explicit Socc(char const *port)
+  explicit Socc(char const * const port)
     : s(io_service), resolver(io_service)
   {
     io::connect(s, resolver.resolve({ "localhost", port }));
   }
 
-  void send(char const *val)
+  void send(char const * const val)
   {
-    dropdapayload((short)std::strlen(val));
-    dropdapayload(val);
+    _dropdatag(TAG::String);
+    short len = std::strlen(val);
+    uint16_t net = htons(len);
+    io::write(s, io::buffer((char const *)&net, sizeof(net)));
+    io::write(s, io::buffer(val, sizeof(char) * len));
   }
 };
 
