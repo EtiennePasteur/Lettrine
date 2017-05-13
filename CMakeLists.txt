@@ -3,7 +3,7 @@ project(Lettrine)
 
 find_package( OpenCV REQUIRED )
 include_directories(${OpenCV_INCLUDE_DIRS})
-include_directories(bloblib)
+include_directories(image_extractor/bloblib)
 
 set(CMAKE_CXX_STANDARD 14)
 
