@@ -1,0 +1,4 @@
+"/Users/pasteu_e/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/171.4073.41/CLion.app/Contents/bin/cmake/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/pasteu_e/Documents/Work/Lettrine
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/pasteu_e/Documents/Work/Lettrine/cmake-build-debug
