@@ -144,8 +144,7 @@ void extractPics(const std::string &path) {
 
     for (;;) {
         int c = waitKey();
-        std::cout << c << std::endl;
-        if (c == 13)
+        if (c == 13 || c == 10)
             break;
         if (c == 27)
             exit(0);
