@@ -21,8 +21,6 @@ static char const * const _usage =
 
 Lettrine %s - Open Library Hackathon 2017)";
 
-Socc socc("4242");
-
 static inline int usage(char const * const name)
 {
   std::cout << fmt(_usage) % name % _version << std::endl;
@@ -40,6 +38,7 @@ int main(int ac, char **av)
       fs::path dir;
       std::string file;
       unsigned page;
+      Socc socc("4242");
 
       std::cout << fmt("Entering %s directory...") % av[1] << std::endl;
       for(auto&& entry : boost::make_iterator_range(fs::directory_iterator(p), {}))
