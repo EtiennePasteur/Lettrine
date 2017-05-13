@@ -50,7 +50,10 @@ def main(argv):
     port = int(argv[2]) if len(argv) == 3 else 8080
     print("Serving %s directory on port %s..." % (argv[1], port))
     httpd = HTTPServer(("localhost", port), Handler)
-    httpd.serve_forever()
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print(" bye!")
     return 0
 
 if __name__ == '__main__':

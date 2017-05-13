@@ -3,8 +3,8 @@
 using namespace cv;
 
 myCompLabeler::myCompLabeler(Mat &binImage,CBlobContour** lab,Point start,Point end):
-	startPoint(start),endPoint(end),
-	binaryImage(binImage)
+  binaryImage(binImage),
+  startPoint(start),endPoint(end)
 {
 	parent=NULL;
 	labels = lab;
@@ -194,7 +194,7 @@ void myCompLabeler::TracerInt( int startDir /*= 5*/ )
 	ptrDataBinary[pos] = 50;
 #endif
 	getNextPointCW();
-	uchar firstDir = dir;
+	/*uchar firstDir = dir;*/
 #ifdef DEBUG_COMPONENT_LABELLING
 	ptrDataBinary[pos] = 100;
 #endif
@@ -282,7 +282,7 @@ void myCompLabeler::getNextPointCCW()
 
 	dir= (dir+6)%8;
 	int i=0;
-	for(i;i<8;i++,dir = (dir+1)%8){
+	for(;i<8;i++,dir = (dir+1)%8){
 		tempR = r+freemanR[dir];
 		tempC = c+freemanC[dir];
  		if(!(tempR<0 || tempR>=h || tempC<0 || tempC>=w)){
@@ -480,9 +480,9 @@ void myCompLabelerGroup::set( int nThreads, Mat binIm )
 	tIds = new pthread_t[nThreads];
 	labelers = new myCompLabeler*[nThreads];
 	Size sz = binIm.size();
-	int numPx = sz.width*sz.width;
+	/*int numPx = sz.width*sz.width;*/
 	int i=0;
-	for(i;i<nThreads-1;i++){
+	for(;i<nThreads-1;i++){
 		int yStart = (int)((float)i/nThreads*sz.height);
 		int yEnd = (int)((float)(i+1)/nThreads*sz.height);
 		Point st(0,yStart);

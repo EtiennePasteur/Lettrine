@@ -1,6 +1,6 @@
 ## paths
-SRCDIR :=	.
-INCDIR :=	.
+SRCDIR :=	sources
+INCDIR :=	$(SRCDIR) $(SRCDIR)/bloblib
 OUTDIR :=	.
 
 ## compilation options
@@ -12,12 +12,19 @@ CXXFLAGS :=	-W -Wall -Wextra -pedantic -std=c++14 \
 ## link options
 LINKER :=	$(CXX)
 LDFLAGS :=
-LDLIBS :=	boost_system boost_filesystem pthread
+LDLIBS :=	boost_system boost_filesystem pthread \
+		opencv_highgui opencv_imgcodecs opencv_imgproc opencv_core
 LDLIBS :=	$(addprefix -l, $(LDLIBS))
 
 ## binary options
 NAME :=		$(OUTDIR)/lettrine
-SRC :=		main.cpp
+SRC :=		main.cpp \
+		extractor.cpp \
+		bloblib/BlobContour.cpp \
+		bloblib/blob.cpp \
+		bloblib/BlobOperators.cpp \
+		bloblib/BlobResult.cpp \
+		bloblib/ComponentLabeling.cpp
 SRC :=		$(addprefix $(SRCDIR)/,$(SRC))
 OBJ :=		$(SRC:.cpp=.o)
 
