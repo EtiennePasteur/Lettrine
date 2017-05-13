@@ -2,6 +2,7 @@
 #ifndef NBT_HPP_
 #define NBT_HPP_
 
+# include <string>
 # include <boost/asio.hpp>
 namespace io = boost::asio;
 
@@ -19,11 +20,6 @@ class Socc
   io::ip::tcp::socket s;
   io::ip::tcp::resolver resolver;
 
-  inline void _dropdatag(TAG const tag)
-  {
-    io::write(s, io::buffer((char const *)&tag, sizeof(tag)));
-  }
-
 public:
   explicit Socc(char const * const port)
     : s(io_service), resolver(io_service)
@@ -31,13 +27,17 @@ public:
     io::connect(s, resolver.resolve({ "localhost", port }));
   }
 
-  void send(char const * const val)
+  inline void dropdatag(TAG const tag)
   {
-    _dropdatag(TAG::String);
-    short len = std::strlen(val);
-    uint16_t net = htons(len);
+    io::write(s, io::buffer((char const *)&tag, sizeof(tag)));
+  }
+
+  void send(std::string val)
+  {
+    dropdatag(TAG::String);
+    uint16_t net = htons(val.size());
     io::write(s, io::buffer((char const *)&net, sizeof(net)));
-    io::write(s, io::buffer(val, sizeof(char) * len));
+    io::write(s, io::buffer(val, sizeof(char) * val.size()));
   }
 };
 
