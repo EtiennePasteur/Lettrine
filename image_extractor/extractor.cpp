@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
     namedWindow("Lettrine", 1);
     vector<vector<Point>> squares;
 
-    Mat image = imread("training_data/1.jpg", 1);
+    Mat image = imread("training_data/test3.jpg", 1);
     cvtColor(image, image, CV_RGB2GRAY);
     threshold(image, image, 75.0, 255.0, THRESH_BINARY_INV);
 
