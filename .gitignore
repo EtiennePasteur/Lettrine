@@ -1,23 +1,19 @@
-#
 # emacs shit
-#
+
 *~
 .*~
 \#*
 .\#*
 
-#
 # cpp shit
-#
+
 *.o
 *.out
 
-#
 # clion shit
-#
+
 .idea/
 
-#
 # project shit
-#
+
 lettrine

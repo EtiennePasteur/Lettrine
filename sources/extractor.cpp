@@ -100,8 +100,9 @@ static void findSquares(const Mat &image, vector<vector<Point> > &squares) {
 static void drawSquares(Mat &image, const vector<vector<Point> > &squares) {
     if (squares.size() == 0)
         std::cout << "No image found" << std::endl;
+    else
+        std::cout << "Image found" << std::endl;
     for (size_t i = 0; i < squares.size(); i++) {
-        std::cout << "Draw square n" << i << std::endl;
         const Point *p = &squares[i][0];
         int n = (int) squares[i].size();
         polylines(image, &p, &n, 1, true, Scalar(0, 255, 0), 3, LINE_AA);
@@ -122,34 +123,31 @@ void bwareaopen(Mat &img, int size) {
     img = newimg;
 }
 
-int mainU(/*int argc, char **argv*/) {
+void extractPics(const std::string &path) {
     namedWindow("Lettrine", 1);
     vector<vector<Point>> squares;
 
-    Mat image = imread("training_data/test3.jpg", 1);
+    Mat image = imread(path, 1);
     cvtColor(image, image, CV_RGB2GRAY);
     threshold(image, image, 75.0, 255.0, THRESH_BINARY_INV);
 
     bwareaopen(image, 800);
 
-    resize(image, image, Size(0, 0), 0.2, 0.2);
+    resize(image, image, Size(0, 0), 0.4, 0.4);
 
     cvtColor(image, image, CV_GRAY2RGB);
 
     medianBlur(image, image, 1);
 
-
-//    threshold(image, image, 101, 255, CV_THRESH_TOZERO);
-//    threshold(image, image, 150, 255, CV_THRESH_TOZERO_INV);
-
     findSquares(image, squares);
     drawSquares(image, squares);
 
     for (;;) {
-        char c = (char) waitKey();
-        if (c == 27)
+        int c = waitKey();
+        std::cout << c << std::endl;
+        if (c == 13)
             break;
+        if (c == 27)
+            exit(0);
     }
-
-    return 0;
 }

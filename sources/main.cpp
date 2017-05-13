@@ -1,64 +1,67 @@
 // std/boost utils
 #include <iostream>
 #include <boost/format.hpp>
-template<typename... Args> constexpr auto fmt(Args&&... args) {
-  return (boost::format(std::forward<Args>(args)...));
+
+template<typename... Args>
+constexpr boost::basic_format<char, std::char_traits<char>, std::allocator<char>> fmt(Args &&... args) {
+    return (boost::format(std::forward<Args>(args)...));
 }
+
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
+
 namespace fs = boost::filesystem;
+
 #include <boost/lexical_cast.hpp>
 
 // NBT payload
 #include "nbt.hpp"
 
-static char const * const _version = "0.1.0";
-static char const * const _usage =
-  R"(Usage: %s SOURCE
+static char const *const _version = "0.1.0";
+static char const *const _usage =
+        R"(Usage: %s SOURCE
 
 	SOURCE		url or directory
 
 
 Lettrine %s - Open Library Hackathon 2017)";
 
-static inline int usage(char const * const name)
-{
-  std::cout << fmt(_usage) % name % _version << std::endl;
-  return (1);
+static inline int usage(char const *const name) {
+    std::cout << fmt(_usage) % name % _version << std::endl;
+    return (1);
 }
 
-int main(int ac, char **av)
-{
-  if (ac != 2)
-    return (usage(av[0]));
+void extractPics(const std::string &path);
 
-  fs::path const p(av[1]);
-  if (fs::is_directory(p))
-    {
-      fs::path dir;
-      std::string file;
-      unsigned page;
-      Socc socc("4242");
+int main(int ac, char **av) {
+    if (ac != 2)
+        return (usage(av[0]));
 
-      std::cout << fmt("Entering %s directory...") % av[1] << std::endl;
-      for(auto&& entry : boost::make_iterator_range(fs::directory_iterator(p), {}))
-	{
-	  dir = entry.path();
-	  file = (fmt("%s/metadata/%s.json") % dir.string() % dir.filename().string()).str();
-	  if (!fs::is_directory(dir) || !fs::is_regular_file(file))
-	    continue;
-	  std::cout << fmt("loading %s ...") % file << std::endl;
-	  socc.send(file);
-	  dir += "/img";
-	  if (fs::is_directory(dir))
-	    for(auto&& entry : boost::make_iterator_range(fs::directory_iterator(dir), {}))
-	      {
-	        file = entry.path().string();
-	        page = file.find("_") + 1;
-		page = boost::lexical_cast<int>(file.substr(page, file.find(".") - page));
-		std::cout << "This is page " << page << std::endl;
-	      }
-	}
+    fs::path const p(av[1]);
+    if (fs::is_directory(p)) {
+        fs::path dir;
+        std::string file;
+        unsigned long page;
+        //Socc socc("4242");
+
+        std::cout << fmt("Entering %s directory...") % av[1] << std::endl;
+        for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(p), {})) {
+            dir = entry.path();
+            file = (fmt("%s/metadata/%s.json") % dir.string() % dir.filename().string()).str();
+            if (!fs::is_directory(dir) || !fs::is_regular_file(file))
+                continue;
+            std::cout << fmt("loading %s ...\n") % file << std::endl;
+            //socc.send(file);
+            dir += "/img";
+            if (fs::is_directory(dir))
+                for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(dir), {})) {
+                    file = entry.path().string();
+                    page = file.find("_") + 1;
+                    page = boost::lexical_cast<unsigned long>(file.substr(page, file.find(".") - page));
+                    std::cout << "This is page " << page << std::endl;
+                    extractPics(file);
+                }
+        }
     }
-  return (0);
+    return (0);
 }
