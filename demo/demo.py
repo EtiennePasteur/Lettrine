@@ -2,7 +2,7 @@
 
 from sys import argv
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from os.path import isdir
+from os.path import isdir, realpath
 from os import listdir, chdir
 
 __version__ = "0.1.0"
@@ -39,7 +39,7 @@ def usage(name):
 def main(argv):
     if not(1 < len(argv) < 4):
         return usage(argv[0])
-    path = argv[1] + "/img"
+    path = realpath(argv[1]) + "/img"
     if not isdir(path):
         return usage(argv[0])
     print("Entering %s directory..." % path)
