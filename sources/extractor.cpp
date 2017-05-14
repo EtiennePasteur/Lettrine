@@ -13,23 +13,20 @@ constexpr auto fmt(Args &&... args) {
 #include "opencv2/highgui.hpp"
 #include "BlobResult.h"
 
-using namespace cv;
-using namespace std;
-
 struct t_pos_contour {
-    Point max;
-    Point min;
-    vector<Point> contour;
+    cv::Point max;
+    cv::Point min;
+    std::vector<cv::Point> contour;
 };
 
-static Mat _ImageP;
+static cv::Mat _ImageP;
 
 static void removeSmallElem(int size) {
     CBlobResult blobs;
-    blobs = CBlobResult(_ImageP, Mat(), 4);
+    blobs = CBlobResult(_ImageP, cv::Mat(), 4);
     blobs.Filter(blobs, B_INCLUDE, CBlobGetLength(), B_GREATER, size);
 
-    Mat newimg(_ImageP.size(), _ImageP.type());
+    cv::Mat newimg(_ImageP.size(), _ImageP.type());
     newimg.setTo(0);
     for (int i = 0; i < blobs.GetNumBlobs(); i++) {
         blobs.GetBlob(i)->FillBlob(newimg, CV_RGB(255, 255, 255), 0, 0, true);
@@ -38,22 +35,23 @@ static void removeSmallElem(int size) {
 }
 
 static void findPics(std::vector<t_pos_contour> &contoursPos) {
-    vector<vector<Point> > contours;
-    vector<vector<Point> > contours0;
-    findContours(_ImageP, contours0, vector<Vec4i>{}, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    std::vector<std::vector<cv::Point> > contours;
+    std::vector<std::vector<cv::Point> > contours0;
+    std::vector<cv::Vec4i> h;
+    findContours(_ImageP, contours0, h, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
     contours.resize(contours0.size());
     for (size_t k = 0; k < contours0.size(); k++)
-        approxPolyDP(Mat(contours0[k]), contours[k], 3, true);
+        approxPolyDP(cv::Mat(contours0[k]), contours[k], 3, true);
 
     bool remove = false;
     t_pos_contour valueContour;
     double seuilX = _ImageP.size().width * 0.07;
     double seuilY = _ImageP.size().height * 0.07;
-    for (std::vector<vector<Point>>::iterator itV = contours.begin(); itV != contours.end();) {
+    for (std::vector<std::vector<cv::Point>>::iterator itV = contours.begin(); itV != contours.end();) {
         valueContour.max = {0, 0};
         valueContour.min = { _ImageP.size().width, _ImageP.size().height };
         valueContour.contour = *itV;
-        for (std::vector<Point>::iterator itP = itV->begin(); itP != itV->end(); itP++) {
+        for (std::vector<cv::Point>::iterator itP = itV->begin(); itP != itV->end(); itP++) {
             if (itP->x < 10 || itP->x > _ImageP.size().width - 10 || itP->y < 10 || itP->y > _ImageP.size().height - 10) {
                 itV = contours.erase(itV);
                 remove = true;
@@ -82,26 +80,26 @@ static void findPics(std::vector<t_pos_contour> &contoursPos) {
 static void createJpeg(std::string const &path, std::string const &destination, std::vector<t_pos_contour> const &contoursPos) {
     int imgNum = 1;
     int margin = 10;
-    Mat image = imread(path, CV_LOAD_IMAGE_UNCHANGED);
+    cv::Mat image = cv::imread(path, CV_LOAD_IMAGE_UNCHANGED);
     for (auto &&i: contoursPos) {
         cv::Rect myROI(i.min.x - margin, i.min.y - margin, (i.max.x + 2 * margin) - i.min.x, (i.max.y + 2 * margin) - i.min.y);
         cv::Mat croppedImage = image(myROI);
         std::string filename = (fmt(destination) % imgNum++).str();
         try {
             std::cout << "Writing " << filename << std::endl;
-            imwrite(filename, croppedImage, vector<int>({CV_IMWRITE_JPEG_QUALITY, 95}));
+            imwrite(filename, croppedImage, std::vector<int>({CV_IMWRITE_JPEG_QUALITY, 95}));
         }
-        catch (runtime_error &ex) {
+        catch (std::runtime_error &ex) {
             fprintf(stderr, "Exception converting image to JPG format: %s\n", ex.what());
         }
     }
 }
 
 void extractPics(std::string const &path, std::string const &destPath) {
-  _ImageP = imread(path, 1);
+  _ImageP = cv::imread(path, 1);
     std::vector<t_pos_contour> contoursPos;
     cvtColor(_ImageP, _ImageP, CV_RGB2GRAY);
-    threshold(_ImageP, _ImageP, 75.0, 255.0, THRESH_BINARY_INV);
+    threshold(_ImageP, _ImageP, 75.0, 255.0, cv::THRESH_BINARY_INV);
     removeSmallElem(800);
     findPics(contoursPos);
     createJpeg(path, destPath, contoursPos);
