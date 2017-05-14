@@ -32,6 +32,10 @@ class Handler(BaseHTTPRequestHandler):
         message = bytes(body, "utf8") if self.path == "/" else open(self.path[1:], "rb").read()
         self.wfile.write(message)
 
+def page(filename):
+    new = "_".join(filename.split("_")[:-1] + [ ".jpg" ])
+    return tuple(map(page.root.__add__, (filename, new)))
+
 def usage(name):
     print(__usage__ % (name, __version__))
     return 1
@@ -39,13 +43,14 @@ def usage(name):
 def main(argv):
     if not(1 < len(argv) < 4):
         return usage(argv[0])
-    path = realpath(argv[1]) + "/img"
+    path = realpath(argv[1])
     if not isdir(path):
         return usage(argv[0])
     print("Entering %s directory..." % path)
     chdir(path)
     global body
-    body += "\n".join([ DOM_IMAGE % (i, i) for i in listdir(path) ])
+    page.root = path
+    body += "\n".join([ DOM_IMAGE % page(i) for i in listdir(path + "/pics") ])
 
     port = int(argv[2]) if len(argv) == 3 else 8080
     print("Serving %s directory on port %s..." % (argv[1], port))
