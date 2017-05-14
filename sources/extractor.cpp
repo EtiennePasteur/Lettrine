@@ -85,6 +85,7 @@ void createJpeg(const std::string &path, const std::string &destination, const s
         cv::Mat croppedImage = image(myROI);
         std::string filename = (fmt(destination) % imgNum++).str();
         try {
+            std::cout << "Writing " << filename << std::endl;
             imwrite(filename, croppedImage, vector<int>({CV_IMWRITE_JPEG_QUALITY, 95}));
         }
         catch (runtime_error &ex) {

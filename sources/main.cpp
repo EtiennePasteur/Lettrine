@@ -9,6 +9,7 @@ constexpr auto fmt(Args &&... args) {
 
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
+
 namespace fs = boost::filesystem;
 
 // NBT payload
@@ -37,7 +38,7 @@ int main(int ac, char **av) {
     fs::path const p(av[1]);
     if (fs::is_directory(p)) {
         fs::path dir;
-	fs::path img;
+        fs::path img;
         std::string file;
         //Socc socc("4242");
 
@@ -50,15 +51,15 @@ int main(int ac, char **av) {
             std::cout << fmt("loading %s ...\n") % file << std::endl;
             //socc.send(file);
             img = fs::path(dir.string() + "/img");
-            if (fs::is_directory(img))
-	      {
-	        fs::create_directory((dir += "/pics/"));
+            if (fs::is_directory(img)) {
+                fs::create_directory((dir += "/pics/"));
                 for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(img), {})) {
-		  file = dir.string() + entry.path().filename().string();
-		    file.erase(file.find_last_of("."), std::string::npos);
-                    extractPics( entry.path().string(), file + "_%02d.jpg");
+                    file = dir.string() + entry.path().filename().string();
+                    file.erase(file.find_last_of("."), std::string::npos);
+                    extractPics(entry.path().string(), file + "_%02d.jpg");
+                    std::cout << std::endl;
                 }
-	      }
+            }
         }
     }
     return (0);

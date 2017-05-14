@@ -34,7 +34,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def page(filename):
     new = "_".join(filename.split("_")[:-1] + [ ".jpg" ])
-    return tuple(map(page.root.__add__, (filename, new)))
+    return tuple(map(page.root.__add__, ("pics/" + filename, "img/" + new)))
 
 def usage(name):
     print(__usage__ % (name, __version__))
