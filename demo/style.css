@@ -1,6 +1,33 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .thumbnail{
 position: relative;
 z-index: 0;
+}
+
+.mini {
+    max-height: 100px;
+}
+
+.background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 0;
+
+  display: block;
+  background-image: url("manuscript-bg.jpg");
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
 }
 
 .thumbnail:hover{
