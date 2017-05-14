@@ -56,7 +56,7 @@ int main(int ac, char **av) {
                 for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(img), {})) {
 		  file = dir.string() + entry.path().filename().string();
 		    file.erase(file.find_last_of("."), std::string::npos);
-                    extractPics(file + "_%02d.jpg <= ", entry.path().string());
+                    extractPics( entry.path().string(), file + "_%02d.jpg");
                 }
 	      }
         }
