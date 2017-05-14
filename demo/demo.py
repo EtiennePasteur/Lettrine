@@ -45,7 +45,7 @@ def main(argv):
     print("Entering %s directory..." % path)
     chdir(path)
     global body
-    body += "\n".join([ DOM_IMAGE % (i, i) for i in listdir(path) ][:10])
+    body += "\n".join([ DOM_IMAGE % (i, i) for i in listdir(path) ])
 
     port = int(argv[2]) if len(argv) == 3 else 8080
     print("Serving %s directory on port %s..." % (argv[1], port))

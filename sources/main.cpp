@@ -9,10 +9,7 @@ constexpr auto fmt(Args &&... args) {
 
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
-
 namespace fs = boost::filesystem;
-
-#include <boost/lexical_cast.hpp>
 
 // NBT payload
 #include "nbt.hpp"
@@ -40,8 +37,8 @@ int main(int ac, char **av) {
     fs::path const p(av[1]);
     if (fs::is_directory(p)) {
         fs::path dir;
+	fs::path tmp;
         std::string file;
-        unsigned long page;
         //Socc socc("4242");
 
         std::cout << fmt("Entering %s directory...") % av[1] << std::endl;
@@ -52,15 +49,16 @@ int main(int ac, char **av) {
                 continue;
             std::cout << fmt("loading %s ...\n") % file << std::endl;
             //socc.send(file);
-            dir += "/img";
-            if (fs::is_directory(dir))
-                for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(dir), {})) {
-                    file = entry.path().string();
-                    page = file.find("_") + 1;
-                    page = boost::lexical_cast<unsigned long>(file.substr(page, file.find(".") - page));
-                    std::cout << "This is page " << page << std::endl;
-                    extractPics(file);
+
+            if (fs::is_directory((tmp = dir + "/img")))
+	      {
+		dir += "/pics";
+                for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(tmp), {})) {
+                    file = entry.path();
+		    file.erase(file.find_last_of("."), string::npos);
+                    extractPics(file + "_%02d.jpg", file.string());
                 }
+	      }
         }
     }
     return (0);
