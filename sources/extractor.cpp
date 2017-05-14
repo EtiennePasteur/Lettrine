@@ -79,17 +79,17 @@ void findPics(const Mat &image, std::vector<t_pos_contour> &contoursPos) {
 void createJpeg(const std::string &path, const std::string &destination, const std::vector<t_pos_contour> &contoursPos) {
     Mat image = imread(path, CV_LOAD_IMAGE_UNCHANGED);
     int imgNum = 1;
+    int margin = 10;
     for (auto &i: contoursPos) {
-        cv::Rect dimensions(i.min.x, i.min.y, i.max.x, i.max.y);
-        cv::Mat croppedImage = image(dimensions);
+        cv::Rect myROI(i.min.x - margin, i.min.y - margin, (i.max.x + 2 * margin) - i.min.x, (i.max.y + 2 * margin) - i.min.y);
+        cv::Mat croppedImage = image(myROI);
         std::string filename = (fmt(destination) % imgNum++).str();
-        std::cout << filename << std::endl;
-//        try {
-//            imwrite(filename, croppedImage, vector<int>({CV_IMWRITE_JPEG_QUALITY, 95}));
-//        }
-//        catch (runtime_error &ex) {
-//            fprintf(stderr, "Exception converting image to JPG format: %s\n", ex.what());
-//        }
+        try {
+            imwrite(filename, croppedImage, vector<int>({CV_IMWRITE_JPEG_QUALITY, 95}));
+        }
+        catch (runtime_error &ex) {
+            fprintf(stderr, "Exception converting image to JPG format: %s\n", ex.what());
+        }
     }
 }
 
