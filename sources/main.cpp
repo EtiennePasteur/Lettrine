@@ -28,7 +28,7 @@ static inline int usage(char const *const name) {
     return (1);
 }
 
-void extractPics(const std::string &path);
+void extractPics(const std::string &path, const std::string &destPath);
 
 int main(int ac, char **av) {
     if (ac != 2)
@@ -49,14 +49,14 @@ int main(int ac, char **av) {
                 continue;
             std::cout << fmt("loading %s ...\n") % file << std::endl;
             //socc.send(file);
-
-            if (fs::is_directory((tmp = dir + "/img")))
+            tmp = dir;
+            if (fs::is_directory((tmp += "/img")))
 	      {
 		dir += "/pics";
                 for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(tmp), {})) {
-                    file = entry.path();
-		    file.erase(file.find_last_of("."), string::npos);
-                    extractPics(file + "_%02d.jpg", file.string());
+                    file = entry.path().string();
+		    file.erase(file.find_last_of("."), std::string::npos);
+                    extractPics(file + "_%02d.jpg", file);
                 }
 	      }
         }

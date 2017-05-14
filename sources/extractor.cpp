@@ -4,9 +4,15 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "BlobResult.h"
+#include <boost/format.hpp>
 
 using namespace cv;
 using namespace std;
+
+template<typename... Args>
+constexpr auto fmt(Args &&... args) {
+    return (boost::format(std::forward<Args>(args)...));
+}
 
 typedef struct s_pos_contour {
     Point max;
@@ -14,7 +20,7 @@ typedef struct s_pos_contour {
     vector<Point> contour;
 } t_pos_contour;
 
-void bwareaopen(Mat &img, int size) {
+void removeSmallElem(Mat &img, int size) {
     CBlobResult blobs;
     blobs = CBlobResult(img, Mat(), 4);
     blobs.Filter(blobs, B_INCLUDE, CBlobGetLength(), B_GREATER, size);
@@ -70,13 +76,29 @@ void findPics(const Mat &image, std::vector<t_pos_contour> &contoursPos) {
     }
 }
 
+void createJpeg(const std::string &path, const std::string &destination, const std::vector<t_pos_contour> &contoursPos) {
+    Mat image = imread(path, CV_LOAD_IMAGE_UNCHANGED);
+    int imgNum = 1;
+    for (auto &i: contoursPos) {
+        cv::Rect dimensions(i.min.x, i.min.y, i.max.x, i.max.y);
+        cv::Mat croppedImage = image(dimensions);
+        std::string filename = (fmt(destination) % imgNum++).str();
+        std::cout << filename << std::endl;
+//        try {
+//            imwrite(filename, croppedImage, vector<int>({CV_IMWRITE_JPEG_QUALITY, 95}));
+//        }
+//        catch (runtime_error &ex) {
+//            fprintf(stderr, "Exception converting image to JPG format: %s\n", ex.what());
+//        }
+    }
+}
 
-
-void extractPics(const std::string &path) {
+void extractPics(const std::string &path, const std::string &destPath) {
     Mat imageP = imread(path, 1);
     std::vector<t_pos_contour> contoursPos;
     cvtColor(imageP, imageP, CV_RGB2GRAY);
     threshold(imageP, imageP, 75.0, 255.0, THRESH_BINARY_INV);
-    bwareaopen(imageP, 800);
+    removeSmallElem(imageP, 800);
     findPics(imageP, contoursPos);
+    createJpeg(path, destPath, contoursPos);
 }
