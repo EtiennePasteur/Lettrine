@@ -1,57 +1,60 @@
+// std and boost utils
+#include <boost/format.hpp>
+template<typename... Args>
+constexpr auto fmt(Args &&... args) {
+    return (boost::format(std::forward<Args>(args)...));
+}
 #include <iostream>
+
+// bloblib and opencv
 #include "opencv2/core.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "BlobResult.h"
-#include <boost/format.hpp>
 
 using namespace cv;
 using namespace std;
 
-template<typename... Args>
-constexpr auto fmt(Args &&... args) {
-    return (boost::format(std::forward<Args>(args)...));
-}
-
-typedef struct s_pos_contour {
+struct t_pos_contour {
     Point max;
     Point min;
     vector<Point> contour;
-} t_pos_contour;
+};
 
-void removeSmallElem(Mat &img, int size) {
+static Mat _ImageP;
+
+static void removeSmallElem(int size) {
     CBlobResult blobs;
-    blobs = CBlobResult(img, Mat(), 4);
+    blobs = CBlobResult(_ImageP, Mat(), 4);
     blobs.Filter(blobs, B_INCLUDE, CBlobGetLength(), B_GREATER, size);
 
-    Mat newimg(img.size(), img.type());
+    Mat newimg(_ImageP.size(), _ImageP.type());
     newimg.setTo(0);
     for (int i = 0; i < blobs.GetNumBlobs(); i++) {
         blobs.GetBlob(i)->FillBlob(newimg, CV_RGB(255, 255, 255), 0, 0, true);
     }
-    img = newimg;
+    _ImageP = newimg;
 }
 
-void findPics(const Mat &image, std::vector<t_pos_contour> &contoursPos) {
+static void findPics(std::vector<t_pos_contour> &contoursPos) {
     vector<vector<Point> > contours;
     vector<vector<Point> > contours0;
-    vector<Vec4i> h;
-    findContours(image, contours0, h, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    findContours(_ImageP, contours0, vector<Vec4i>{}, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
     contours.resize(contours0.size());
     for (size_t k = 0; k < contours0.size(); k++)
         approxPolyDP(Mat(contours0[k]), contours[k], 3, true);
 
     bool remove = false;
     t_pos_contour valueContour;
-    double seuilX = image.size().width * 0.07;
-    double seuilY = image.size().height * 0.07;
+    double seuilX = _ImageP.size().width * 0.07;
+    double seuilY = _ImageP.size().height * 0.07;
     for (std::vector<vector<Point>>::iterator itV = contours.begin(); itV != contours.end();) {
         valueContour.max = {0, 0};
-        valueContour.min = {image.size().width, image.size().height};
+        valueContour.min = { _ImageP.size().width, _ImageP.size().height };
         valueContour.contour = *itV;
         for (std::vector<Point>::iterator itP = itV->begin(); itP != itV->end(); itP++) {
-            if (itP->x < 10 || itP->x > image.size().width - 10 || itP->y < 10 || itP->y > image.size().height - 10) {
+            if (itP->x < 10 || itP->x > _ImageP.size().width - 10 || itP->y < 10 || itP->y > _ImageP.size().height - 10) {
                 itV = contours.erase(itV);
                 remove = true;
                 break;
@@ -76,11 +79,11 @@ void findPics(const Mat &image, std::vector<t_pos_contour> &contoursPos) {
     }
 }
 
-void createJpeg(const std::string &path, const std::string &destination, const std::vector<t_pos_contour> &contoursPos) {
-    Mat image = imread(path, CV_LOAD_IMAGE_UNCHANGED);
+static void createJpeg(std::string const &path, std::string const &destination, std::vector<t_pos_contour> const &contoursPos) {
     int imgNum = 1;
     int margin = 10;
-    for (auto &i: contoursPos) {
+    Mat image = imread(path, CV_LOAD_IMAGE_UNCHANGED);
+    for (auto &&i: contoursPos) {
         cv::Rect myROI(i.min.x - margin, i.min.y - margin, (i.max.x + 2 * margin) - i.min.x, (i.max.y + 2 * margin) - i.min.y);
         cv::Mat croppedImage = image(myROI);
         std::string filename = (fmt(destination) % imgNum++).str();
@@ -94,12 +97,12 @@ void createJpeg(const std::string &path, const std::string &destination, const s
     }
 }
 
-void extractPics(const std::string &path, const std::string &destPath) {
-    Mat imageP = imread(path, 1);
+void extractPics(std::string const &path, std::string const &destPath) {
+  _ImageP = imread(path, 1);
     std::vector<t_pos_contour> contoursPos;
-    cvtColor(imageP, imageP, CV_RGB2GRAY);
-    threshold(imageP, imageP, 75.0, 255.0, THRESH_BINARY_INV);
-    removeSmallElem(imageP, 800);
-    findPics(imageP, contoursPos);
+    cvtColor(_ImageP, _ImageP, CV_RGB2GRAY);
+    threshold(_ImageP, _ImageP, 75.0, 255.0, THRESH_BINARY_INV);
+    removeSmallElem(800);
+    findPics(contoursPos);
     createJpeg(path, destPath, contoursPos);
 }

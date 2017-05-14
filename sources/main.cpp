@@ -1,19 +1,17 @@
-// std/boost utils
+// std and boost utils
 #include <iostream>
 #include <boost/format.hpp>
-
 template<typename... Args>
 constexpr auto fmt(Args &&... args) {
     return (boost::format(std::forward<Args>(args)...));
 }
-
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
-
 namespace fs = boost::filesystem;
 
-// NBT payload
+// project includes
 #include "nbt.hpp"
+void extractPics(const std::string &path, const std::string &destPath);
 
 static char const *const _version = "0.1.0";
 static char const *const _usage =
@@ -28,8 +26,6 @@ static inline int usage(char const *const name) {
     std::cout << fmt(_usage) % name % _version << std::endl;
     return (1);
 }
-
-void extractPics(const std::string &path, const std::string &destPath);
 
 int main(int ac, char **av) {
     if (ac != 2)
