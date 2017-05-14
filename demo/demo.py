@@ -26,7 +26,9 @@ body = """\
 <head>
         <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">
 </head>
-<div class="background-image"></div>
+<div class="background">
+    <img src="manuscript-bg.jpg" class="stretch" alt="" />
+</div>
 """
 
 def content(path):
