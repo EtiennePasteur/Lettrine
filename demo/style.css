@@ -1,32 +1,56 @@
-.thumbnail{
-position: relative;
-z-index: 0;
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
-.thumbnail:hover{
-background-color: transparent;
-z-index: 50;
+.thumbnail {
+    position: relative;
+    z-index: 0;
 }
 
-.thumbnail span{
-position: absolute;
-background-color: lightyellow;
-padding: 5px;
-left: -1000px;
-border: 1px dashed gray;
-visibility: hidden;
-color: black;
-text-decoration: none;
+.mini {
+    max-height: 100px;
 }
 
-.thumbnail span img{
-border-width: 0;
-padding: 2px;
-max-width: 400px;
+.background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    filter: blur(5px) grayscale(10%);
 }
 
-.thumbnail:hover span{
-visibility: visible;
-top: 0;
-left: 60px;
+.stretch {
+    width:100%;
+    height:100%;
+}
+
+.thumbnail:hover {
+    background-color: transparent;
+    z-index: 50;
+}
+
+.thumbnail span {
+    position: absolute;
+    background-color: lightyellow;
+    padding: 5px;
+    left: -1000px;
+    border: 1px dashed gray;
+    visibility: hidden;
+    color: black;
+    text-decoration: none;
+}
+
+.thumbnail span img {
+    border-width: 0;
+    padding: 2px;
+    max-width: 400px;
+}
+
+.thumbnail:hover span {
+    visibility: visible;
+    top: 0;
+    left: 60px;
 }
