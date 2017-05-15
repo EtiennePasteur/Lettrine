@@ -24,6 +24,7 @@ language: cpp
 install:
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then export CXX="g++-5" CC="gcc-5"; fi
   - if [[ "$TRAVIS_OS_NAME" = "osx" ]]; then brew tap homebrew/science; fi
+  - if [[ "$TRAVIS_OS_NAME" = "osx" ]]; then brew link --overwrite numpy; fi
   - if [[ "$TRAVIS_OS_NAME" = "osx" ]]; then brew install opencv; fi
 
 script:
