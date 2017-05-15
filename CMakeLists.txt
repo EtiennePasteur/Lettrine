@@ -29,4 +29,5 @@ target_link_libraries( Lettrine ${OpenCV_LIBS} boost_system boost_filesystem pth
 add_subdirectory(gtest)
 add_subdirectory(UnitTests)
 
+enable_testing()
 add_test(NAME Lettrine_Tests COMMAND Lettrine_Tests)
