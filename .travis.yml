@@ -14,6 +14,7 @@ matrix:
           - g++-5
           - libopencv-dev
           - libcv-dev
+          - libboost-all-dev
 
     - os: osx
       compiler: clang
