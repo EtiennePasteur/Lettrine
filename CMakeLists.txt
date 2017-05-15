@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 2.7)
 project(Lettrine)
 
 find_package( OpenCV REQUIRED )
@@ -25,3 +25,8 @@ set(SOURCE_FILES
 
 add_executable(Lettrine ${SOURCE_FILES})
 target_link_libraries( Lettrine ${OpenCV_LIBS} boost_system boost_filesystem pthread)
+
+add_subdirectory(gtest)
+add_subdirectory(UnitTests)
+
+add_test(NAME Lettrine_Tests COMMAND Lettrine_Tests)
