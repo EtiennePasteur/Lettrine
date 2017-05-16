@@ -245,7 +245,7 @@ defaults:
     values:
       layout: single
       author_profile: true
-      comments: true
+      comments: false
       share: true
   # _docs
   - scope:
@@ -256,6 +256,6 @@ defaults:
       read_time: false
       author_profile: false
       share: true
-      comments: true
+      comments: false
       sidebar:
         nav: "docs"
