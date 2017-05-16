@@ -25,7 +25,7 @@ ctest --verbose
 ```
 4. Tester
 ```
-build/Lettrine DeBry
+build/Lettrine ImagesTests
 ```
 
 
