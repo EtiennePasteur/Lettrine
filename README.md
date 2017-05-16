@@ -16,7 +16,14 @@ sudo apt-get install libboost-all-dev
 sudo apt-get install libopencv-dev
 git submodule update --init
 ```
-3. Tester
+3. Build
+```
+mkdir build
+cd build
+cmake .. && make
+ctest --verbose
+```
+4. Tester
 ```
 build/Lettrine DeBry
 ```
