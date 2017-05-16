@@ -34,7 +34,7 @@ staticman:
   commitMessage          : "New comment."
   filename               : comment-{@timestamp}
   format                 : "yml"
-  moderation             : true
+  moderation             : false
   path                   : "_data/comments/{options.slug}" # "/_data/comments/{options.slug}" (default)
   requiredFields         : ['name', 'email', 'message']
   transforms:
@@ -79,7 +79,7 @@ analytics:
 author:
   name             : *name
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Developer on Lettrine Project"
+  bio              : "Developpeur"
   location         : "Lyon FRANCE"
   email            : "etienne.pasteur@epitech.eu"
   uri              : "http://etiennepasteur.com"
@@ -87,20 +87,20 @@ author:
   codepen          :
   dribbble         :
   flickr           :
-  facebook         :
+  facebook         : "https://www.facebook.com/et.pasteur"
   foursquare       :
   github           : "EtiennePasteur"
   google_plus      :
   keybase          :
-  instagram        :
+  instagram        : "https://www.instagram.com/etienne_pasteur/"
   lastfm           :
-  linkedin         :
+  linkedin         : "https://www.linkedin.com/in/etienne-pasteur-338042a8/"
   pinterest        :
   soundcloud       :
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
   steam            :
   tumblr           :
-  twitter          :
+  twitter          : "https://twitter.com/etienne_pasteur"
   vine             :
   weibo            :
   xing             :
@@ -246,6 +246,7 @@ defaults:
       layout: single
       author_profile: true
       comments: true
+      share: true
   # _docs
   - scope:
       path: ""
@@ -254,7 +255,7 @@ defaults:
       layout: single
       read_time: false
       author_profile: false
-      share: false
+      share: true
       comments: true
       sidebar:
         nav: "docs"
