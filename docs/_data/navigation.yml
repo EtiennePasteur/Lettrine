@@ -1,12 +1,25 @@
-# main links
 main:
-  - title: "Lettrine"
-    url: https://etiennepasteur.github.io/Lettrine/
-  # - title: "About"
-  #   url: https://mmistakes.github.io/minimal-mistakes/about/
-  # - title: "Sample Posts"
-  #   url: /year-archive/
-  # - title: "Sample Collections"
-  #   url: /collection-archive/
-  # - title: "Sitemap"
-  #   url: /sitemap/
+  - title: "Presentation"
+    url: /presentation/
+  - title: "Comment ça marche"
+    url: /docs/comment-ca-marche/
+
+docs:
+  - title: Explications
+    children:
+      - title: "Comment ça marche"
+        url: /docs/comment-ca-marche/
+      - title: "Structure"
+        url: /docs/structure/
+      - title: "Installation"
+        url: /docs/installation/
+  - title: Meta
+    children:
+      - title: "Histoire"
+        url: /docs/histoire/
+      - title: "Contributions"
+        url: /docs/contributions/
+      - title: "License"
+        url: /docs/license/
+      - title: "Terms &amp; Privacy Policy"
+        url: /terms/
