@@ -18,7 +18,7 @@ teaser                   : # path of fallback teaser image, e.g. "/assets/images
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : "staticman" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
+  provider               : # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
     shortname            : # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
@@ -87,20 +87,20 @@ author:
   codepen          :
   dribbble         :
   flickr           :
-  facebook         : "https://www.facebook.com/et.pasteur"
+  facebook         : "et.pasteur"
   foursquare       :
   github           : "EtiennePasteur"
   google_plus      :
   keybase          :
-  instagram        : "https://www.instagram.com/etienne_pasteur/"
+  instagram        : "etienne_pasteur"
   lastfm           :
-  linkedin         : "https://www.linkedin.com/in/etienne-pasteur-338042a8/"
+  linkedin         : "etienne-pasteur-338042a8"
   pinterest        :
   soundcloud       :
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
   steam            :
   tumblr           :
-  twitter          : "https://twitter.com/etienne_pasteur"
+  twitter          : "etienne_pasteur"
   vine             :
   weibo            :
   xing             :
