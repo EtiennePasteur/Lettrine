@@ -9,9 +9,9 @@
 locale                   : "fr-FR"
 title                    : "Lettrine"
 title_separator          : "-"
-name                     : "Etienne Pasteur"
+name                     : &name "Etienne Pasteur"
 description              : "Lettrine project website"
-url                      : "https://etiennepasteur.github.io/Lettrine/"
+url                      : "https://etiennepasteur.github.io/"
 baseurl                  : "/Lettrine"
 repository               : "EtiennePasteur/Lettrine"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
@@ -87,14 +87,14 @@ author:
   codepen          :
   dribbble         :
   flickr           :
-  facebook         : *facebook
+  facebook         :
   foursquare       :
-  github           : *github
+  github           : "EtiennePasteur"
   google_plus      :
   keybase          :
-  instagram        : *instagram
+  instagram        :
   lastfm           :
-  linkedin         : *linkedin
+  linkedin         :
   pinterest        :
   soundcloud       :
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
