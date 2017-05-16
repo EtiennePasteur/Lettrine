@@ -1,5 +1,5 @@
 # Lettrine
-[![Build Status](https://travis-ci.org/EtiennePasteur/Lettrine.svg?branch=master)](https://travis-ci.org/EtiennePasteur/Lettrine)
+[![Build Status](https://travis-ci.org/EtiennePasteur/Lettrine.svg?branch=master)](https://travis-ci.org/EtiennePasteur/Lettrine) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]
 ## Project description
 Le Bodmer Lab de l'Université de Genève vient d'achever la numérisation d'une importante collection de livres de voyage de la Renaissance, publiés aux XVIe-XVIIe siècles et richement illustrés par des gravures et de cartes. A cet ensemble s'ajoutent plus de 200 éditions du Faust de Goethe, souvent illustrées. Ces deux sets de données sont mis à disposition des participants de Geneva Open Libraries (#GEOPENGLAM) pendant le #OGH17, et en anticipant leur publication sur le site du Bodmer Lab, attendue au printemps 2018.
 
