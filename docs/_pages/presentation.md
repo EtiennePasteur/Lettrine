@@ -1,5 +1,5 @@
 ---
-permalink: /presentation/
+permalink: /
 title: "Presentation"
 excerpt: "Extraction d'image a partir de livres anciens"
 last_modified_at: 2017-05-16T18:14:43-04:00

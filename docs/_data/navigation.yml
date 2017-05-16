@@ -1,6 +1,6 @@
 main:
   - title: "Presentation"
-    url: /presentation/
+    url: /
   - title: "Comment ça marche"
     url: /docs/comment-ca-marche/
 
