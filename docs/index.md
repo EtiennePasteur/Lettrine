@@ -1,37 +1,19 @@
-## Welcome to GitHub Pages
+# Lettrine : Projet d'extraction d'image à partir de livres anciens
 
-You can use the [editor on GitHub](https://github.com/EtiennePasteur/test/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+Le Bodmer Lab de l'Université de Genève vient d'achever la numérisation d'une importante collection de livres de voyage de la Renaissance, publiés aux XVIe-XVIIe siècles et richement illustrés par des gravures et de cartes. A cet ensemble s'ajoutent plus de 200 éditions du Faust de Goethe, souvent illustrées. Ces deux sets de données sont mis à disposition des participants de Geneva Open Libraries (#GEOPENGLAM) pendant le #OGH17, et en anticipant leur publication sur le site du Bodmer Lab, attendue au printemps 2018.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Ce projet #GEOPENGLAM se propose d'identifier et d'extraire automatiquement les illustrations des ces quelque 50'000 pages. Un processus d'indexation et de “tagging” est par la suite envisagé. Au-delà de ce processus d'analyse quantitative des données, notre ambition est de créer une interface pouvant répertorier les illustrations et permettre aux chercheurs, par la suite de faire des classements et des analyses qualitatives (quelles gravures sont répétées dans plusieurs volumes, quelles similitudes peut-on déceler à travers la collection, etc).
 
-### Markdown
+## L'equipe
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/EtiennePasteur/test/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+#### BodmerLab (UNIGE)	
+- Radu Suciu          radu.suciu@unige.ch
+- Pierre-Yves Burgi   pierre-yves.burgi@unige.ch
+#### Epitech Lyon
+- Etienne Pasteur     etienne.pasteur@epitech.eu
+- Dimitri Mas         dimitri.mas@epitech.eu
+- Alexandre Szymocha  alexandre@szymocha.com
+#### Cern
+- Carmen Cadenas
+#### CUI (UNIGE)
+- Saba Kvesitadze
