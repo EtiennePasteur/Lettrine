@@ -78,7 +78,7 @@ analytics:
 # Site Author
 author:
   name             : *name
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profil_etienne.jpg"
   bio              : "Developpeur"
   location         : "Lyon FRANCE"
   email            : "etienne.pasteur@epitech.eu"
