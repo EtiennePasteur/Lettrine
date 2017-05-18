@@ -31,7 +31,7 @@ void processImage(std::queue<std::tuple<std::string, std::string>> &files) {
 
 void startProcessThreads(std::queue<std::tuple<std::string, std::string>> &files) {
     std::vector<std::thread> threadPool;
-    auto threadNumber = std::thread::hardware_concurrency();
+    auto threadNumber = std::thread::hardware_concurrency() || 1;
 
     for (unsigned int i = 0; i < threadNumber; ++i) {
         // Thread does not take rvalues, so we wrap the reference into a copyable object
