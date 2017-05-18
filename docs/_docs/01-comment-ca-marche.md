@@ -26,7 +26,7 @@ Dans un premier temps, nous préparons l'image à être traitée pour l'extracti
 ### Deuxième étape
 ![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/Etapes_extraction_images_2.jpg)  
 
-Âpres avoir binarisé notre image et y avoir retiré les petits éléments, la deuxième étape se concentre sur l'extraction des images a proprement parler.
+Apres avoir binarisé notre image et y avoir retiré les petits éléments, la deuxième étape se concentre sur l'extraction des images a proprement parler.
 - On commence par récupérer les contours de nos images en récupérant les coordonnées de chaque pixel blanc situé à coté d'un pixel noir.
 - Ensuite, afin d'améliorer la précision de notre algorithme, nous décidons d'ignorer les contours possédant des pixels situés sur les extrémités de la page, ceci afin d'éviter le plus possible les fausses détections (notamment causées par la reliure du livre).
 - Enfin, pour chaque contour nous recherchons les coordonnées minimales en X et en Y, puis les coordonnées maximales parmis tous les points qui le composent. Il ne reste donc plus qu'à extraire la région située entre ces deux points sur l'image originale.
