@@ -7,8 +7,8 @@ constexpr auto fmt(Args &&... args) {
 }
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <queue>
 #include "Extractor.hpp"
+#include "ThreadConductor.hpp"
 
 namespace fs = boost::filesystem;
 

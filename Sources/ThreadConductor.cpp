@@ -3,10 +3,7 @@
 //
 
 
-#include <mutex>
-#include <queue>
-#include <thread>
-#include <Extractor.hpp>
+#include "ThreadConductor.hpp"
 
 std::mutex _lock;
 
@@ -23,6 +20,8 @@ void processImage(std::queue<std::tuple<std::string, std::string>> &files) {
         std::string path{std::get<0>(file)};
         std::string filename{std::get<1>(file)};
         files.pop();
+
+        std::cout << "Pages left : " << files.size() << "  |  current : " << path << std::endl;
 
         _lock.unlock();
 
