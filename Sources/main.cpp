@@ -9,6 +9,7 @@ constexpr boost::basic_format<char> fmt(Args &&... args) {
 #include <boost/range/iterator_range.hpp>
 #include <thread>
 #include <queue>
+#include <mutex>
 
 namespace fs = boost::filesystem;
 
@@ -30,16 +31,60 @@ static inline int usage(char const *const name) {
     return (1);
 }
 
+std::mutex _lock;
+
+void processImage(std::queue<std::tuple<std::string, std::string>> &files) {
+    // Check if some work is still available in the queue
+    while (true) {
+        _lock.lock();
+        if (files.size() == 0) {
+            _lock.unlock();
+            return;
+        }
+
+        auto &file = files.front();
+
+        std::string path{std::get<0>(file)};
+        std::string filename{std::get<1>(file)};
+        files.pop();
+        std::cout << "Remaining files to parse : " << files.size();
+
+        _lock.unlock();
+
+        std::cout << " [" << path << "]" << std::endl;
+        extractPics(path, filename);
+    }
+}
+
+void startProcessThreads(std::queue<std::tuple<std::string, std::string>> &files) {
+    std::vector<std::thread> threadPool;
+    auto threadNumber = std::thread::hardware_concurrency();
+
+    for (unsigned int i = 0; i < threadNumber; ++i) {
+        // Thread does not take rvalues, so we wrap the reference into a copyable object
+        threadPool.push_back(std::thread(processImage, std::ref(files))); // Implicit call to move constructor
+    }
+
+    for (auto &i : threadPool) {
+        i.join();
+    }
+}
+
 int main(int ac, char **av) {
     if (ac != 2)
         return (usage(av[0]));
 
+    std::queue<std::tuple<std::string, std::string>> files;
     fs::path const p(av[1]);
     if (fs::is_directory(p)) {
         fs::path dir;
         fs::path img;
         std::string file;
         //Socc socc("4242");
+
+        // TODO: Only handle image files
+        // TODO: Handle multiple directory structures
+        // MAYBE TODO: Accept more than JPG
 
         std::cout << fmt("Entering %s directory...") % av[1] << std::endl;
         for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(p), {})) {
@@ -55,11 +100,11 @@ int main(int ac, char **av) {
                 for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(img), {})) {
                     file = dir.string() + entry.path().filename().string();
                     file.erase(file.find_last_of("."), std::string::npos);
-                    extractPics(entry.path().string(), file + "_%02d.jpg");
-                    std::cout << std::endl;
+                    files.push({entry.path().string(), file + "_%02d.jpg"});
                 }
             }
         }
     }
+    startProcessThreads(files);
     return (0);
 }
