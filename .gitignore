@@ -45,6 +45,7 @@ cmake-build-debug/
 # Project stuff
 lettrine
 pics
+build/
 
 # Jekyll stuff
 *.gem

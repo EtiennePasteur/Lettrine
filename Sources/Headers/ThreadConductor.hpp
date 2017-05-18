@@ -1,0 +1,8 @@
+//
+// Created by aguadoe on 18/05/17.
+//
+
+#ifndef LETTRINE_THREADCONDUCTOR_HPP
+#define LETTRINE_THREADCONDUCTOR_HPP
+
+#endif //LETTRINE_THREADCONDUCTOR_HPP
