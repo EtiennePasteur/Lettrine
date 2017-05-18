@@ -1,21 +1,20 @@
 ---
-title: "Comment ça marche"
-permalink: /docs/comment-ca-marche/
-excerpt: "Comprendre comment fonctionne Lettrine"
+title: "Fonctionnement"
+permalink: /docs/fonctionnement/
+excerpt: "Comprendre le fonctionnement de l'algorithme de Lettrine"
 last_modified_at: 2017-05-18T10:14:43-04:00
 ---
 
 ## Les différentes étapes
 <figure style="max-width: 350px" class="align-center">
-  <img src="{{ site.url }}{{ site.baseurl }}/assets/images/Etapes_extraction_images_0.jpg" alt="">
+  <img src="https://github.com/EtiennePasteur/Lettrine/raw/master/docs/assets/images/Etapes_extraction_images_0.jpg" alt="">
   <figcaption>Image originale</figcaption>
 </figure> 
 L'algorithme d'extraction d'images se décompose en deux étapes. Dans un premier temps, nous préparons l'image au travers de divers procédés. Puis, dans un second temps, l'algorithme va extraire les images du contenu numerisé.
 {: style="text-align: justify;"}  
 
-
 ### Première étape
-![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/Etapes_extraction_images_1.jpg)  
+![image-center](https://github.com/EtiennePasteur/Lettrine/raw/master/docs/assets/images/Etapes_extraction_images_1.jpg)  
 
 Dans un premier temps, nous préparons l'image à être traitée pour l'extraction. Ce procédé se déroule en 3 étapes :
 - Une image JPEG est composée de 3 canaux (rouge, bleu et vert), le premier traitement appliqué à l'image la transforme en une image sur un seul canal (Nuances de gris).
@@ -24,7 +23,7 @@ Dans un premier temps, nous préparons l'image à être traitée pour l'extracti
 {: style="text-align: justify;"}  
 
 ### Deuxième étape
-![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/Etapes_extraction_images_2.jpg)  
+![image-center](https://github.com/EtiennePasteur/Lettrine/raw/master/docs/assets/images/Etapes_extraction_images_2.jpg)  
 
 Apres avoir binarisé notre image et y avoir retiré les petits éléments, la deuxième étape se concentre sur l'extraction des images a proprement parler.
 - On commence par récupérer les contours de nos images en récupérant les coordonnées de chaque pixel blanc situé à coté d'un pixel noir.
