@@ -31,45 +31,6 @@ static inline int usage(char const *const name) {
     return (1);
 }
 
-std::mutex _lock;
-
-void processImage(std::queue<std::tuple<std::string, std::string>> &files) {
-    // Check if some work is still available in the queue
-    while (true) {
-        _lock.lock();
-        if (files.size() == 0) {
-            _lock.unlock();
-            return;
-        }
-
-        auto &file = files.front();
-
-        std::string path{std::get<0>(file)};
-        std::string filename{std::get<1>(file)};
-        files.pop();
-        std::cout << "Remaining files to parse : " << files.size();
-
-        _lock.unlock();
-
-        std::cout << " [" << path << "]" << std::endl;
-        extractPics(path, filename);
-    }
-}
-
-void startProcessThreads(std::queue<std::tuple<std::string, std::string>> &files) {
-    std::vector<std::thread> threadPool;
-    auto threadNumber = std::thread::hardware_concurrency();
-
-    for (unsigned int i = 0; i < threadNumber; ++i) {
-        // Thread does not take rvalues, so we wrap the reference into a copyable object
-        threadPool.push_back(std::thread(processImage, std::ref(files))); // Implicit call to move constructor
-    }
-
-    for (auto &i : threadPool) {
-        i.join();
-    }
-}
-
 int main(int ac, char **av) {
     if (ac != 2)
         return (usage(av[0]));
