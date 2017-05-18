@@ -2,11 +2,14 @@
 #include <iostream>
 #include <boost/format.hpp>
 template<typename... Args>
-constexpr auto fmt(Args &&... args) {
+constexpr boost::basic_format<char> fmt(Args &&... args) {
     return (boost::format(std::forward<Args>(args)...));
 }
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <thread>
+#include <queue>
+
 namespace fs = boost::filesystem;
 
 // project includes
