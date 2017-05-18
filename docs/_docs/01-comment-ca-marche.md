@@ -15,7 +15,7 @@ L'algorithme d'extraction d'images se décompose en deux étapes. Dans un premie
 
 
 ### Première étape
-![image-center]({{ site.url }}{{ site.baseurl }}/docs/assets/images/Etapes_extraction_images_1.jpg)  
+![image-center](/assets/images/Etapes_extraction_images_1.jpg)  
 
 Dans un premier temps, nous préparons l'image à être traitée pour l'extraction. Ce procédé se déroule en 3 étapes :
 - Une image JPEG est composée de 3 canaux (rouge, bleu et vert), le premier traitement appliqué à l'image la transforme en une image sur un seul canal (Nuances de gris).
