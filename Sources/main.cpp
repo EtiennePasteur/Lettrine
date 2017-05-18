@@ -2,7 +2,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 template<typename... Args>
-constexpr boost::basic_format<char> fmt(Args &&... args) {
+constexpr auto fmt(Args &&... args) {
     return (boost::format(std::forward<Args>(args)...));
 }
 #include <boost/filesystem.hpp>

@@ -8,7 +8,7 @@
 #include <boost/format.hpp>
 
 template<typename... Args>
-constexpr boost::basic_format<char> fmt(Args &&... args) {
+constexpr auto fmt(Args &&... args) {
     return (boost::format(std::forward<Args>(args)...));
 }
 
@@ -17,43 +17,41 @@ struct t_pos_contour {
     cv::Point min;
 };
 
-static cv::Mat _ImageP;
-
 //Function that remove small elements like text or dust.
-static void removeSmallElem(int size) {
+static void removeSmallElem(int size, cv::Mat &image) {
     CBlobResult blobs;
-    blobs = CBlobResult(_ImageP, cv::Mat(), 4);
+    blobs = CBlobResult(image, cv::Mat(), 4);
     blobs.Filter(blobs, B_INCLUDE, CBlobGetLength(), B_GREATER, size);
 
-    cv::Mat newimg(_ImageP.size(), _ImageP.type());
+    cv::Mat newimg(image.size(), image.type());
     newimg.setTo(0);
     for (int i = 0; i < blobs.GetNumBlobs(); i++) {
         blobs.GetBlob(i)->FillBlob(newimg, CV_RGB(255, 255, 255), 0, 0, true);
     }
-    _ImageP = newimg;
+    image = newimg;
 }
 
-static void findPics(std::vector<t_pos_contour> &contoursPos) {
+static void findPics(std::vector<t_pos_contour> &contoursPos, cv::Mat &image) {
     std::vector<std::vector<cv::Point>> contours;
-    findContours(_ImageP, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+    findContours(image, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
     contours.resize(contours.size());
     for (size_t k = 0; k < contours.size(); k++)
         approxPolyDP(cv::Mat(contours[k]), contours[k], 3, true);
 
     bool remove = false;
     t_pos_contour valueContour;
-    double seuilX = _ImageP.size().width * 0.07;
-    double seuilY = _ImageP.size().height * 0.07;
+    double seuilX = image.size().width * 0.07;
+    double seuilY = image.size().height * 0.07;
 
     //Iterate through all elem found
     for (std::vector<std::vector<cv::Point>>::iterator itV = contours.begin(); itV != contours.end();) {
         valueContour.max = {0, 0};
-        valueContour.min = {_ImageP.size().width, _ImageP.size().height};
+        valueContour.min = {image.size().width, image.size().height};
 
         //Iterate through each points of the contour
         for (std::vector<cv::Point>::iterator itP = itV->begin(); itP != itV->end(); itP++) {
             //Remove elem if it's contours is to close from border
-            if (itP->x < 10 || itP->x > _ImageP.size().width - 10 || itP->y < 10 || itP->y > _ImageP.size().height - 10) {
+            if (itP->x < 10 || itP->x > image.size().width - 10 || itP->y < 10 || itP->y > image.size().height - 10) {
                 itV = contours.erase(itV);
                 remove = true;
                 break;
@@ -96,17 +94,17 @@ static void createJpeg(std::string const &path, std::string const &destination, 
 }
 
 //Load image turn it into gray mode, apply threshold on it and then remove small elements like text or dust.
-void prepareImage(std::string const &path) {
-    _ImageP = cv::imread(path, 1);
-    cvtColor(_ImageP, _ImageP, CV_RGB2GRAY);
-    threshold(_ImageP, _ImageP, 75.0, 255.0, cv::THRESH_BINARY_INV);
-    removeSmallElem(800);
+static void prepareImage(cv::Mat &image) {
+    cvtColor(image, image, CV_RGB2GRAY);
+    threshold(image, image, 75.0, 255.0, cv::THRESH_BINARY_INV);
+    removeSmallElem(800, image);
 }
 
 //Entry point function that call all other functions.
 void extractPics(std::string const &path, std::string const &destPath) {
+    cv::Mat image = cv::imread(path, 1);
     std::vector<t_pos_contour> contoursPos;
-    prepareImage(path);
-    findPics(contoursPos);
+    prepareImage(image);
+    findPics(contoursPos, image);
     createJpeg(path, destPath, contoursPos);
 }
