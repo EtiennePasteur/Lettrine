@@ -1,21 +1,12 @@
-// Including OpenCv and Bloblib which allow the remove small things on image like characters
-#include "opencv2/core/core.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include "BlobResult.h"
-
 // Including boost format to easily format string with fmt function
 #include <boost/format.hpp>
+#include "Extractor.hpp"
 
 template<typename... Args>
 constexpr auto fmt(Args &&... args) {
     return (boost::format(std::forward<Args>(args)...));
 }
 
-struct t_pos_contour {
-    cv::Point max;
-    cv::Point min;
-};
 
 //Function that remove small elements like text or dust.
 static void removeSmallElem(int size, cv::Mat &image) {
@@ -100,7 +91,6 @@ static void prepareImage(cv::Mat &image) {
     removeSmallElem(800, image);
 }
 
-//Entry point function that call all other functions.
 void extractPics(std::string const &path, std::string const &destPath) {
     cv::Mat image = cv::imread(path, 1);
     std::vector<t_pos_contour> contoursPos;

@@ -6,6 +6,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <Extractor.hpp>
 
 std::mutex _lock;
 

@@ -4,13 +4,16 @@ project(Lettrine)
 find_package( OpenCV REQUIRED )
 include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(Sources/bloblib)
+include_directories(Sources/Headers)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Wextra -pedantic -std=c++14")
 
 set(SOURCE_FILES
         Sources/main.cpp
-        Sources/extractor.cpp
-        Sources/nbt.hpp
+        Sources/Extractor.cpp
+        Sources/Headers/Extractor.hpp
+        Sources/ThreadConductor.cpp
+
         Sources/bloblib/blob.cpp
         Sources/bloblib/blob.h
         Sources/bloblib/BlobContour.cpp
@@ -21,7 +24,8 @@ set(SOURCE_FILES
         Sources/bloblib/BlobResult.cpp
         Sources/bloblib/BlobResult.h
         Sources/bloblib/ComponentLabeling.cpp
-        Sources/bloblib/ComponentLabeling.h Sources/ThreadConductor.cpp)
+        Sources/bloblib/ComponentLabeling.h
+        )
 
 add_executable(Lettrine ${SOURCE_FILES})
 target_link_libraries( Lettrine ${OpenCV_LIBS} boost_system boost_filesystem pthread)

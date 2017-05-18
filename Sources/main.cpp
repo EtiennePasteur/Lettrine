@@ -7,15 +7,11 @@ constexpr auto fmt(Args &&... args) {
 }
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <thread>
 #include <queue>
-#include <mutex>
+#include "Extractor.hpp"
 
 namespace fs = boost::filesystem;
 
-// project includes
-#include "nbt.hpp"
-void extractPics(const std::string &path, const std::string &destPath);
 
 static char const *const _version = "0.1.0";
 static char const *const _usage =
