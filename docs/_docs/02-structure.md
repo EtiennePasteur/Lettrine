@@ -14,7 +14,7 @@ rapide que sur une architecture non threadée. Cette méthode est particulièrem
 
 
 **Changement de contexte** (*aka **context switch***)  
-Lorsque le nombre de thread logiciels dépasse le nombre de threads physiques (nombre de CPU disponibles),
+Lorsque le nombre de thread logiciels dépasse le nombre de threads physiques (nombre de coeurs CPU disponibles),
 le  noyau du système d'exploitation a recours à des mécanismes pour éviter de bloquer les calculs sur un seul programme.  
 Ces mécanismes sont appelés *context switch*. Lors d'un *context switch*, l'état du programme en cours d'exécution est sauvegardé
 pour pouvoir être récupéré plus tard. Le programme est ensuite mit en pause et laisse sa place à un autre programme.
@@ -23,7 +23,7 @@ ont un coût temporel. Sauvegarder et restaurer des états prend un temps qui es
 {: style="text-align: justify;"}
 
 Pour éviter les *context switch* inutiles, il existe autant de threads que de coeurs sur la machine hôte.
-Chaque image est traitée par un seul et unique coeur processeur (CPU). Un coeur dédie donc toute sa puissance de
+Chaque image est traitée par un seul et unique coeur CPU. Un coeur dédie donc toute sa puissance de
 calcul à une seule image à la fois et n'a pas à jongler entre plusieurs. En pratique, il reste encore des context switch, étant donné
 qu'OpenCV est aussi threadé, mais il s'agit ici de réduire les coûts.
 Chaque thread pioche la prochaine page à analyser dans une queue protégée à l'aide d'un mutex.
