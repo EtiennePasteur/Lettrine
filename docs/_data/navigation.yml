@@ -1,14 +1,14 @@
 main:
   - title: "Presentation"
     url: /
-  - title: "Comment ça marche"
-    url: /docs/comment-ca-marche/
+  - title: "Fonctionnement"
+    url: /docs/fonctionnement/
 
 docs:
-  - title: Explications
+  - title: Documentation
     children:
-      - title: "Comment ça marche"
-        url: /docs/comment-ca-marche/
+      - title: "Fonctionnement"
+        url: /docs/fonctionnement/
       - title: "Structure"
         url: /docs/structure/
       - title: "Installation"

@@ -1,7 +1,7 @@
 ---
-title: "Comment ça marche"
-permalink: /docs/comment-ca-marche/
-excerpt: "Comprendre comment fonctionne Lettrine"
+title: "Fonctionnement"
+permalink: /docs/fonctionnement/
+excerpt: "Comprendre le fonctionnement de l'algorithme de Lettrine"
 last_modified_at: 2017-05-18T10:14:43-04:00
 ---
 
@@ -12,7 +12,6 @@ last_modified_at: 2017-05-18T10:14:43-04:00
 </figure> 
 L'algorithme d'extraction d'images se décompose en deux étapes. Dans un premier temps, nous préparons l'image au travers de divers procédés. Puis, dans un second temps, l'algorithme va extraire les images du contenu numerisé.
 {: style="text-align: justify;"}  
-
 
 ### Première étape
 ![image-center](https://github.com/EtiennePasteur/Lettrine/raw/master/docs/assets/images/Etapes_extraction_images_1.jpg)  
