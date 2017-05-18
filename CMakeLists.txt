@@ -25,7 +25,7 @@ set(SOURCE_FILES
         Sources/bloblib/BlobResult.h
         Sources/bloblib/ComponentLabeling.cpp
         Sources/bloblib/ComponentLabeling.h
-        )
+        Sources/Headers/ThreadConductor.hpp)
 
 add_executable(Lettrine ${SOURCE_FILES})
 target_link_libraries( Lettrine ${OpenCV_LIBS} boost_system boost_filesystem pthread)
