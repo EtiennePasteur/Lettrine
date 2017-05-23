@@ -10,8 +10,7 @@ constexpr auto fmt(Args &&... args) {
 
 //Function that remove small elements like text or dust.
 static void removeSmallElem(int size, cv::Mat &image) {
-    CBlobResult blobs;
-    blobs = CBlobResult(image, cv::Mat(), 4);
+    CBlobResult blobs{CBlobResult(image, cv::Mat(), 4)};
     blobs.Filter(blobs, B_INCLUDE, CBlobGetLength(), B_GREATER, size);
 
     cv::Mat newimg(image.size(), image.type());
