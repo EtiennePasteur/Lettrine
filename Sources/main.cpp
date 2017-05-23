@@ -60,7 +60,7 @@ int main(int ac, char **av) {
                 for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(img), {})) {
                     file = dir.string() + entry.path().filename().string();
                     file.erase(file.find_last_of("."), std::string::npos);
-                    files.push({entry.path().string(), file + "_%02d.jpg"});
+                    files.push(std::tuple<std::string, std::string>(entry.path().string(), file + "_%02d.jpg"));
                 }
             }
         }

@@ -1,5 +1,5 @@
 ## paths
-SRCDIR :=	sources
+SRCDIR :=	Sources
 INCDIR :=	$(SRCDIR) $(SRCDIR)/bloblib
 OUTDIR :=	.
 
@@ -19,7 +19,8 @@ LDLIBS :=	$(addprefix -l, $(LDLIBS))
 ## binary options
 NAME :=		$(OUTDIR)/lettrine
 SRC :=		main.cpp \
-		extractor.cpp \
+		Extractor.cpp \
+		ThreadConductor.cpp \
 		bloblib/BlobContour.cpp \
 		bloblib/blob.cpp \
 		bloblib/BlobOperators.cpp \
