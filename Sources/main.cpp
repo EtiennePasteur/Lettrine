@@ -31,7 +31,10 @@ int main(int ac, char **av) {
     if (ac != 2)
         return (usage(av[0]));
 
+    std::cout << "OpenCV is running in " << (cv::useOptimized() ? "optimized" : "non-optimized") << " mode" << std::endl;
+
     std::queue<std::tuple<std::string, std::string>> files;
+
     fs::path const p(av[1]);
     if (fs::is_directory(p)) {
         fs::path dir;

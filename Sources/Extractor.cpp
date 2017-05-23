@@ -86,13 +86,12 @@ static void createJpeg(std::string const &path, std::string const &destination, 
 
 //Load image turn it into gray mode, apply threshold on it and then remove small elements like text or dust.
 static void prepareImage(cv::Mat &image) {
-    cvtColor(image, image, CV_RGB2GRAY);
     threshold(image, image, 75.0, 255.0, cv::THRESH_BINARY_INV);
     removeSmallElem(800, image);
 }
 
 void extractPics(std::string const &path, std::string const &destPath) {
-    cv::Mat image = cv::imread(path, 1);
+    cv::Mat image = cv::imread(path, cv::IMREAD_GRAYSCALE);
     std::vector<t_pos_contour> contoursPos;
     prepareImage(image);
     findPics(contoursPos, image);
