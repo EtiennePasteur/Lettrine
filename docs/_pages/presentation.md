@@ -1,6 +1,6 @@
 ---
 layout: splash
-title: "Presentation"
+title: "Lettrine"
 excerpt: "Extraction d'image à partir de livres anciens"
 last_modified_at: 2017-05-16T18:14:43-04:00
 permalink: /
