@@ -21,7 +21,6 @@ git submodule update --init
 mkdir build
 cd build
 cmake .. && make
-ctest --verbose
 ```
 4. Tester
 ```
