@@ -25,7 +25,7 @@ ctest --verbose
 ```
 4. Tester
 ```
-build/Lettrine ImagesTests
+build/Lettrine -d ImagesTests/img/1072056536
 ```
 
 

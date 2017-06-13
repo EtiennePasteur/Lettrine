@@ -2,7 +2,6 @@
 // Created by aguadoe on 18/05/17.
 //
 
-
 #include "ThreadConductor.hpp"
 
 std::mutex _lock;

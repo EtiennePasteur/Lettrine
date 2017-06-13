@@ -1,68 +1,72 @@
-// std and boost utils
+//
+// Created by Etienne Pasteur on 13/05/2017.
+//
+
 #include <iostream>
 #include <boost/format.hpp>
-template<typename... Args>
-constexpr auto fmt(Args &&... args) {
-    return (boost::format(std::forward<Args>(args)...));
-}
+#include <tclap/CmdLine.h>
 #include <boost/filesystem.hpp>
 #include <boost/range/iterator_range.hpp>
 #include "Extractor.hpp"
 #include "ThreadConductor.hpp"
 
-namespace fs = boost::filesystem;
-
-
-static char const *const _version = "0.1.0";
-static char const *const _usage =
-        R"(Usage: %s SOURCE
-
-	SOURCE		url or directory
-
-
-Lettrine %s - Open Library Hackathon 2017)";
-
-static inline int usage(char const *const name) {
-    std::cout << fmt(_usage) % name % _version << std::endl;
-    return (1);
+template<typename... Args>
+constexpr auto fmt(Args &&... args) {
+    return (boost::format(std::forward<Args>(args)...));
 }
 
-int main(int ac, char **av) {
-    if (ac != 2)
-        return (usage(av[0]));
+namespace fs = boost::filesystem;
 
-    std::cout << "OpenCV is running in " << (cv::useOptimized() ? "optimized" : "non-optimized") << " mode" << std::endl;
+int main(int ac, char **av) {
+    std::string dirName = "";
+    std::string fileName = "";
+    std::string outputDirName = "";
+
+    try {
+        TCLAP::CmdLine cmd("Image Extraction from Digitised Books", ' ', "1.0");
+        TCLAP::ValueArg<std::string> dirArg("d", "directory", "Directory to scan", false, "", "directory name");
+        TCLAP::ValueArg<std::string> fileArg("f", "file", "File to scan", false, "", "file name");
+        TCLAP::ValueArg<std::string> outputArg("o", "output-dir", "Output directory name", false, "extracted", "output directory name");
+
+        cmd.xorAdd(dirArg, fileArg);
+        cmd.add(outputArg);
+        cmd.parse(ac, av);
+        dirName = dirArg.getValue();
+        fileName = fileArg.getValue();
+        outputDirName = outputArg.getValue();
+    } catch (TCLAP::ArgException &e) {
+        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
+    }
 
     std::queue<std::tuple<std::string, std::string>> files;
 
-    fs::path const p(av[1]);
-    if (fs::is_directory(p)) {
-        fs::path dir;
-        fs::path img;
-        std::string file;
-        //Socc socc("4242");
+    if (dirName != "") {
+        fs::path imgDir(dirName);
+        if (fs::is_directory(imgDir)) {
+            std::cout << fmt("Entering %s directory...") % dirName << std::endl;
 
-        // TODO: Only handle image files
-        // TODO: Handle multiple directory structures
-        // MAYBE TODO: Accept more than JPG
-
-        std::cout << fmt("Entering %s directory...") % av[1] << std::endl;
-        for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(p), {})) {
-            dir = entry.path();
-            file = (fmt("%s/metadata/%s.json") % dir.string() % dir.filename().string()).str();
-            if (!fs::is_directory(dir) || !fs::is_regular_file(file))
-                continue;
-            std::cout << fmt("loading %s ...\n") % file << std::endl;
-            //socc.send(file);
-            img = fs::path(dir.string() + "/img");
-            if (fs::is_directory(img)) {
-                fs::create_directory((dir += "/pics/"));
-                for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(img), {})) {
-                    file = dir.string() + entry.path().filename().string();
+            std::string file;
+            std::string outName = imgDir.string() + "/" + outputDirName + "/";
+            fs::path outDir(outName);
+            fs::create_directory(outName);
+            for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(imgDir), {})) {
+                if (entry.path().extension() == ".jpg") {
+                    file = outDir.string() + entry.path().filename().string();
                     file.erase(file.find_last_of("."), std::string::npos);
                     files.push(std::tuple<std::string, std::string>(entry.path().string(), file + "_%02d.jpg"));
                 }
             }
+        }
+    } else if (fileName != "") {
+        std::string file;
+        fs::path img(fileName);
+        std::string outName = img.parent_path().string() + "/" + outputDirName + "/";
+        fs::path outDir(outName);
+        fs::create_directory(outName);
+        if (img.extension() == ".jpg") {
+            file = outDir.string() + img.filename().string();
+            file.erase(file.find_last_of("."), std::string::npos);
+            files.push(std::tuple<std::string, std::string>(img.string(), file + "_%02d.jpg"));
         }
     }
     startProcessThreads(files);

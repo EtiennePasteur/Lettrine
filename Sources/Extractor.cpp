@@ -1,4 +1,7 @@
-// Including boost format to easily format string with fmt function
+//
+// Created by Etienne Pasteur on 13/05/2017.
+//
+
 #include <boost/format.hpp>
 #include "Extractor.hpp"
 
