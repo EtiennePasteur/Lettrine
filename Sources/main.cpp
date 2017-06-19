@@ -60,15 +60,18 @@ int main(int ac, char **av) {
     } else if (fileName != "") {
         std::string file;
         fs::path img(fileName);
-        std::string outName = img.parent_path().string() + "/" + outputDirName + "/";
-        fs::path outDir(outName);
-        fs::create_directory(outName);
-        if (img.extension() == ".jpg") {
-            file = outDir.string() + img.filename().string();
-            file.erase(file.find_last_of("."), std::string::npos);
-            files.push(std::tuple<std::string, std::string>(img.string(), file + "_%02d.jpg"));
+        if (fs::exists(img)) {
+            std::string outName = img.parent_path().string() + "/" + outputDirName + "/";
+            fs::path outDir(outName);
+            fs::create_directory(outName);
+            if (img.extension() == ".jpg") {
+                file = outDir.string() + img.filename().string();
+                file.erase(file.find_last_of("."), std::string::npos);
+                files.push(std::tuple<std::string, std::string>(img.string(), file + "_%02d.jpg"));
+            }
         }
     }
-    startProcessThreads(files);
+    if (!files.empty())
+        startProcessThreads(files);
     return (0);
 }
