@@ -43,8 +43,7 @@ cmake-build-debug/
 .\#*
 
 # Project stuff
-lettrine
-pics
+extracted/
 build/
 
 # Jekyll stuff
