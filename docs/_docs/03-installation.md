@@ -26,7 +26,7 @@ MacOs
 brew tap homebrew/science
 brew install opencv
 brew install cmake
-brew install 
+brew install boost
 ```
 
 3. Compilation
@@ -37,7 +37,7 @@ cmake .. && make
 ```
 4. Executer le programme
 ```
-./Lettrine ../ImagesTests/
+./Lettrine -d ../ImagesTests/1072056536/img/
 ```
 5. Lancer la demo
 ```
