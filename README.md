@@ -24,7 +24,7 @@ cmake .. && make
 ```
 4. Tester
 ```
-build/Lettrine -d ImagesTests/img/1072056536
+build/Lettrine -d ImagesTests/1072056536/img/
 ```
 
 
