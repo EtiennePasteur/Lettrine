@@ -26,7 +26,7 @@ int main(int ac, char **av) {
         TCLAP::CmdLine cmd("Image Extraction from Digitised Books", ' ', "1.0");
         TCLAP::ValueArg<std::string> dirArg("d", "directory", "Directory to scan", false, "", "directory name");
         TCLAP::ValueArg<std::string> fileArg("f", "file", "File to scan", false, "", "file name");
-        TCLAP::ValueArg<std::string> outputArg("o", "output-dir", "Output directory name", false, "extracted", "output directory name");
+        TCLAP::ValueArg<std::string> outputArg("o", "output-dir", "Output directory name", false, "./extracted/", "output directory name");
 
         cmd.xorAdd(dirArg, fileArg);
         cmd.add(outputArg);
@@ -46,9 +46,8 @@ int main(int ac, char **av) {
             std::cout << fmt("Entering %s directory...") % dirName << std::endl;
 
             std::string file;
-            std::string outName = imgDir.string() + "/" + outputDirName + "/";
-            fs::path outDir(outName);
-            fs::create_directory(outName);
+            fs::path outDir(outputDirName);
+            fs::create_directory(outputDirName);
             for (auto &&entry : boost::make_iterator_range(fs::directory_iterator(imgDir), {})) {
                 if (entry.path().extension() == ".jpg") {
                     file = outDir.string() + entry.path().filename().string();
@@ -61,9 +60,8 @@ int main(int ac, char **av) {
         std::string file;
         fs::path img(fileName);
         if (fs::exists(img)) {
-            std::string outName = img.parent_path().string() + "/" + outputDirName + "/";
-            fs::path outDir(outName);
-            fs::create_directory(outName);
+            fs::path outDir(outputDirName);
+            fs::create_directory(outputDirName);
             if (img.extension() == ".jpg") {
                 file = outDir.string() + img.filename().string();
                 file.erase(file.find_last_of("."), std::string::npos);
