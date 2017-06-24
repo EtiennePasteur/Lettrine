@@ -34,6 +34,7 @@ int main(int ac, char **av) {
         dirName = dirArg.getValue();
         fileName = fileArg.getValue();
         outputDirName = outputArg.getValue();
+        outputDirName += "/";
     } catch (TCLAP::ArgException &e) {
         std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
     }
